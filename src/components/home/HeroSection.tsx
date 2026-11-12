@@ -2,11 +2,72 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Shield, ArrowRight, Store, CheckCircle, Search } from 'lucide-react';
+import { Shield, ArrowRight, Store, CheckCircle, Search, ClipboardList } from 'lucide-react';
 
 export const HeroSection: React.FC = () => {
   return (
-    <section className="relative bg-[#07192C] text-white overflow-hidden py-14 sm:py-20 lg:py-24">
+    <>
+    {/* Mobile Hero */}
+    <section className="lg:hidden relative overflow-hidden bg-[#0B2547] text-white px-4 pt-7 pb-8 text-center">
+      <div
+        className="absolute inset-0 bg-cover bg-center opacity-20"
+        style={{ backgroundImage: `url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=800&q=70')` }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0B2547]/60 via-[#0B2547]/85 to-[#0B2547]" />
+      <div className="absolute -top-16 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-brand-blue/30 blur-3xl" />
+
+      <div className="relative">
+        <div className="inline-flex items-center gap-1.5 bg-white/10 border border-white/20 rounded-full px-3 py-1 mb-4">
+          <Shield className="w-3.5 h-3.5 text-emerald-400" />
+          <span className="text-[10px] font-semibold tracking-wider uppercase text-emerald-300">Trusted Trading Platform</span>
+        </div>
+
+        <h1 className="font-bengali font-bold text-[28px] leading-[1.3] [text-shadow:0_2px_10px_rgba(0,0,0,0.4)]">
+          বাংলাদেশের বৃহত্তম পাইকারি<br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-orange-400">ও স্ক্র্যাপ মার্কেটপ্লেস</span>
+        </h1>
+        <p className="font-bengali text-[15px] text-slate-200 leading-relaxed mt-3">
+          ভেরিফাইড সেলার এবং ১০০% নিরাপদ লেনদেনের নিশ্চয়তা
+        </p>
+
+        <div className="mt-5 flex flex-col gap-2.5 max-w-xs mx-auto">
+          <Link
+            href="/categories"
+            className="flex items-center justify-center gap-2 bg-brand-blue active:bg-brand-blueHover text-white py-3 rounded-xl text-sm font-bold uppercase shadow-lg"
+          >
+            <span>Find Wholesale Lots</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+          <div className="grid grid-cols-2 gap-2.5">
+            <Link
+              href="/post-ad"
+              className="flex items-center justify-center gap-1.5 bg-brand-orange active:bg-brand-orangeHover text-white py-3 rounded-xl text-xs font-bold uppercase shadow-lg"
+            >
+              <Store className="w-4 h-4" />
+              Open Free Shop
+            </Link>
+            <Link
+              href="/buy-leads"
+              className="flex items-center justify-center gap-1.5 border border-white/60 text-white py-3 rounded-xl text-xs font-bengali font-semibold active:bg-white/10"
+            >
+              <ClipboardList className="w-4 h-4" />
+              Buy Leads
+            </Link>
+          </div>
+        </div>
+
+        <div className="mt-6 grid grid-cols-3 divide-x divide-white/15 border-t border-white/15 pt-4">
+          {[['১০০%', 'ভেরিফাইড সেলার'], ['৫০০+', 'পাইকারি লট'], ['২৪/৭', 'সাপোর্ট']].map(([n, l]) => (
+            <div key={l} className="px-1">
+              <div className="text-lg font-extrabold text-amber-300 font-bengali">{n}</div>
+              <div className="text-[10px] text-slate-300 font-bengali leading-tight">{l}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section className="hidden lg:block relative bg-[#07192C] text-white overflow-hidden py-14 sm:py-20 lg:py-24">
       {/* Background Graphic Elements & Overlay */}
       <div 
         className="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-luminosity"
@@ -107,6 +168,7 @@ export const HeroSection: React.FC = () => {
         </div>
       </div>
     </section>
+    </>
   );
 };
 

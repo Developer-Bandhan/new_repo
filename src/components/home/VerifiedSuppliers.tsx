@@ -30,22 +30,23 @@ export const VerifiedSuppliers: React.FC = () => {
   };
 
   return (
-    <section className="py-12 bg-white">
+    <section className="py-8 sm:py-12 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Title */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 pb-3 border-b border-slate-100 gap-2">
-          <div>
-            <h2 className="text-2xl md:text-3xl font-extrabold font-bengali text-brand-navy tracking-tight">
+        <div className="flex flex-col items-center sm:flex-row sm:items-end justify-between mb-6 sm:mb-8 sm:pb-3 sm:border-b sm:border-slate-100 gap-3 sm:gap-2 text-center sm:text-left">
+          <div className="flex flex-col items-center sm:items-start">
+            <h2 className="text-[26px] md:text-3xl font-extrabold font-bengali text-brand-navy tracking-tight leading-tight">
               ভেরিফাইড সাপ্লায়ার সেকশন
             </h2>
-            <p className="text-xs md:text-sm text-slate-500 font-bengali mt-1">
-              জাতীয় পরিচয়পত্র ও ট্রেড লাইসেন্স যাচাইকৃত নির্ভরযোগ্য পাইকারি ডিলারবৃন্দ
+            <div className="sm:hidden mt-2 h-[3px] w-10 rounded-full bg-brand-orange" />
+            <p className="text-[13px] md:text-sm text-slate-500 font-bengali leading-relaxed mt-2.5 sm:mt-1 max-w-[18rem] sm:max-w-none">
+              জাতীয় পরিচয়পত্র ও ট্রেড লাইসেন্স যাচাইকৃত নির্ভরযোগ্য পাইকারি ডিলারবৃন্দ
             </p>
           </div>
           <Link
             href="/seller/seller-1"
-            className="inline-flex items-center gap-1 text-xs md:text-sm font-semibold text-brand-blue hover:text-brand-navy transition-colors font-bengali"
+            className="inline-flex items-center gap-1 text-[13px] md:text-sm font-semibold text-brand-blue hover:text-brand-navy transition-colors font-bengali max-sm:bg-blue-50 max-sm:border max-sm:border-blue-100 max-sm:rounded-full max-sm:pl-4 max-sm:pr-3 max-sm:py-1.5 max-sm:active:scale-95"
           >
             <span>সব ভেরিফাইড সেলার দেখুন</span>
             <ChevronRight className="w-4 h-4" />

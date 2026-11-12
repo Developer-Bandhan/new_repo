@@ -3,8 +3,15 @@ import { HeroSection } from '@/components/home/HeroSection';
 import { CategoryGrid } from '@/components/home/CategoryGrid';
 import { VerifiedSuppliers } from '@/components/home/VerifiedSuppliers';
 import { FeaturedInventory } from '@/components/home/FeaturedInventory';
-import { ShieldCheck, Truck, Headphones, BadgePercent, ArrowRight } from 'lucide-react';
+import { ShieldCheck, Truck, Headphones, BadgePercent, Store } from 'lucide-react';
 import Link from 'next/link';
+
+const trustItems = [
+  { icon: ShieldCheck, color: 'text-emerald-400', title: '১০০% ভেরিফাইড সেলার', desc: 'জাতীয় পরিচয়পত্র ও লাইসেন্স যাচাইকৃত' },
+  { icon: BadgePercent, color: 'text-amber-400', title: 'সরাসরি পাইকারি মূল্য', desc: 'কোনো মধ্যস্বত্বভোগী বা দালালি নেই' },
+  { icon: Truck, color: 'text-blue-400', title: 'সারাদেশে ডেলিভারি নেটওয়ার্ক', desc: 'ঢাকা, চট্টগ্রাম ও শিল্পাঞ্চল কাভারেজ' },
+  { icon: Headphones, color: 'text-orange-400', title: '২৪/৭ ডেডিকেটেড সাপোর্ট', desc: 'যেকোনো বিরোধ নিষ্পত্তিতে সহযোগিতা' },
+];
 
 export default function HomePage() {
   return (
@@ -22,50 +29,44 @@ export default function HomePage() {
       <FeaturedInventory />
 
       {/* 5. Trust & Quality Assurance Banner */}
-      <section className="bg-gradient-to-r from-brand-navy to-brand-darkNavy text-white py-14">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center md:text-left">
-            
-            <div className="flex flex-col md:flex-row items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-emerald-400 flex-shrink-0">
-                <ShieldCheck className="w-6 h-6" />
+      <section className="bg-gradient-to-r from-brand-navy to-brand-darkNavy text-white py-7 md:py-14 overflow-hidden">
+        {/* Desktop: 4 columns */}
+        <div className="hidden md:block max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-4 gap-6 text-left">
+            {trustItems.map(({ icon: Icon, color, title, desc }) => (
+              <div key={title} className="flex items-center gap-3">
+                <div className={`w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0 ${color}`}>
+                  <Icon className="w-6 h-6" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-sm">{title}</h4>
+                  <p className="text-xs text-slate-400 font-bengali">{desc}</p>
+                </div>
               </div>
-              <div>
-                <h4 className="font-bold text-sm">১০০% ভেরিফাইড সেলার</h4>
-                <p className="text-xs text-slate-400 font-bengali">জাতীয় পরিচয়পত্র ও লাইসেন্স যাচাইকৃত</p>
-              </div>
-            </div>
+            ))}
+          </div>
+        </div>
 
-            <div className="flex flex-col md:flex-row items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-amber-400 flex-shrink-0">
-                <BadgePercent className="w-6 h-6" />
+        {/* Mobile: one line, continuously scrolling */}
+        <div className="md:hidden [mask-image:linear-gradient(to_right,transparent,#000_6%,#000_94%,transparent)]">
+          <div
+            className="flex w-max animate-marquee motion-reduce:animate-none active:[animation-play-state:paused]"
+            style={{ animationDuration: '24s' }}
+          >
+            {[...trustItems, ...trustItems].map(({ icon: Icon, color, title, desc }, i) => (
+              <div
+                key={`${title}-${i}`}
+                className="mr-3 flex items-center gap-3 flex-shrink-0 bg-white/[0.07] border border-white/10 rounded-2xl pl-3 pr-5 py-3"
+              >
+                <div className={`w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0 ${color}`}>
+                  <Icon className="w-5 h-5" />
+                </div>
+                <div className="whitespace-nowrap">
+                  <h4 className="font-bold text-[13px] leading-snug">{title}</h4>
+                  <p className="text-[11px] text-slate-400 font-bengali leading-snug">{desc}</p>
+                </div>
               </div>
-              <div>
-                <h4 className="font-bold text-sm">সরাসরি পাইকারি মূল্য</h4>
-                <p className="text-xs text-slate-400 font-bengali">কোনো মধ্যস্বত্বভোগী বা দালালি নেই</p>
-              </div>
-            </div>
-
-            <div className="flex flex-col md:flex-row items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-blue-400 flex-shrink-0">
-                <Truck className="w-6 h-6" />
-              </div>
-              <div>
-                <h4 className="font-bold text-sm">সারাদেশে ডেলিভারি নেটওয়ার্ক</h4>
-                <p className="text-xs text-slate-400 font-bengali">ঢাকা, চট্টগ্রাম ও শিল্পাঞ্চল কাভারেজ</p>
-              </div>
-            </div>
-
-            <div className="flex flex-col md:flex-row items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-orange-400 flex-shrink-0">
-                <Headphones className="w-6 h-6" />
-              </div>
-              <div>
-                <h4 className="font-bold text-sm">২৪/৭ ডেডিকেটেড সাপোর্ট</h4>
-                <p className="text-xs text-slate-400 font-bengali">যেকোনো বিরোধ নিষ্পত্তিতে সহযোগিতা</p>
-              </div>
-            </div>
-
+            ))}
           </div>
         </div>
       </section>
@@ -74,7 +75,7 @@ export default function HomePage() {
       <section className="bg-brand-orange py-10 text-white text-center">
         <div className="max-w-4xl mx-auto px-4">
           <h3 className="text-2xl md:text-3xl font-extrabold font-bengali mb-2">
-            আপনার কাছে কি পুরাতন ব্যাটারি বা স্ক্র্যাপ মেটাল আছে?
+            আপনার কাছে কি ব্যাটারি বা স্ক্র্যাপ মেটাল আছে?
           </h3>
           <p className="text-sm md:text-base font-bengali opacity-95 mb-6">
             আজই পাইকারি বাজারে ফ্রি দোকান খুলুন এবং সারাদেশের শত শত পাইকারি ক্রেতার কাছে দ্রুত বিক্রি করুন।
@@ -83,8 +84,8 @@ export default function HomePage() {
             href="/post-ad"
             className="inline-flex items-center gap-2 bg-white text-brand-orange hover:bg-slate-100 font-bold px-8 py-3.5 rounded-xl shadow-lg transition-transform hover:scale-105 active:scale-95 text-sm md:text-base"
           >
-            <span>ফ্রি বিজ্ঞাপন দিন (Post Free Ad)</span>
-            <ArrowRight className="w-4 h-4" />
+            <Store className="w-4 h-4" />
+            <span className="uppercase">Open Free Shop</span>
           </Link>
         </div>
       </section>

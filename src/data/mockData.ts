@@ -185,7 +185,7 @@ export const mockSellers: Seller[] = [
     locationBn: 'ভাটিয়ারী, চট্টগ্রাম',
     district: 'Chittagong',
     fullAddress: 'Shipbreaking Yard Zone, Bhatiari, Sitakunda, Chittagong',
-    logo: 'https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=300&q=80',
+    logo: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=300&q=80',
     coverImage: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1200&q=80',
     isNidVerified: true,
     isApproved: true,
@@ -320,7 +320,7 @@ export const mockProducts: Product[] = [
     location: 'Tongi Industrial Area',
     locationBn: 'টঙ্গী শিল্প এলাকা',
     images: [
-      'https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=800&q=80',
     ],
     description: 'Heavy melting scrap from factory decommissioning. High density iron and structural beams.',
     descriptionBn: 'বন্ধ হয়ে যাওয়া টেক্সটাইল ও স্পিনিং মিলের স্ট্রাকচারাল হেভি আয়রন স্ক্র্যাপ। রি-রোলিং মিলের জন্য সেরা।',
@@ -352,7 +352,7 @@ export const mockProducts: Product[] = [
     location: 'Dhaka',
     locationBn: 'ঢাকা',
     images: [
-      'https://images.unsplash.com/photo-1558441719-8b449c6ff673?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80',
     ],
     description: 'Server room backup batteries. Sealed lead acid 12V 7Ah to 12V 26Ah units.',
     descriptionBn: 'সার্ভার রুম থেকে নামানো সীলড লেড এসিড ব্যাটারি লট। দ্রুত ক্লিয়ারেন্স সেল।',
@@ -380,7 +380,7 @@ export const mockProducts: Product[] = [
     location: 'Narayanganj',
     locationBn: 'নারায়ণগঞ্জ',
     images: [
-      'https://images.unsplash.com/photo-1508873696983-2df5293cb32b?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1497440001374-f26997328c1b?auto=format&fit=crop&w=800&q=80',
     ],
     description: 'Deep cycle solar batteries retrieved from rural electrification projects.',
     descriptionBn: 'পল্লী সোলার প্রজেক্ট থেকে সংগৃহীত ডিপ সাইকেল সোলার ব্যাটারির বিশাল কালেকশন।',

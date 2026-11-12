@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Facebook, Instagram, Twitter, Youtube, ShieldCheck, Mail, Phone, MapPin } from 'lucide-react';
 
 export const Footer: React.FC = () => {
@@ -11,9 +12,7 @@ export const Footer: React.FC = () => {
           {/* Brand & Mission */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-10 h-10 rounded-lg bg-brand-orange flex items-center justify-center text-white font-extrabold text-xl shadow-md">
-                <span>PB</span>
-              </div>
+              <Image src="/logo.png" unoptimized alt="Paikari Bazar" width={44} height={44} className="h-12 w-auto" />
               <span className="font-extrabold text-white text-xl tracking-tight">
                 Paikari Bazar
               </span>
@@ -83,7 +82,6 @@ export const Footer: React.FC = () => {
         {/* Bottom Bar */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
           <p>© 2026 ® Trusted Trading Platform # | Paikari Bazar Bangladesh</p>
-          <p className="font-mono text-[11px]">Next.js Enterprise Marketplace Edition</p>
         </div>
       </div>
     </footer>

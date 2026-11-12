@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { 
   ChevronDown, 
@@ -13,7 +14,9 @@ import {
   Search,
   Home,
   FileEdit,
-  ClipboardList
+  ClipboardList,
+  LayoutGrid,
+  ChevronRight
 } from 'lucide-react';
 import { mockCategories } from '@/data/mockData';
 
@@ -22,16 +25,83 @@ export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [categoriesOpen, setCategoriesOpen] = useState(false);
 
+  // Close drawer when the route changes
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
+  // Lock page scroll while the drawer is open + close on Escape
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setMobileMenuOpen(false);
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [mobileMenuOpen]);
+
+  const drawerLinks = [
+    { href: '/', label: 'Home', sub: 'হোম', icon: Home },
+    { href: '/categories', label: 'All Categories', sub: 'সব ক্যাটাগরি', icon: LayoutGrid },
+    { href: '/buy-leads', label: 'Buy Leads / RFQ', sub: 'ক্রেতার চাহিদা', icon: ClipboardList },
+    { href: '/seller/seller-1', label: 'Seller Hub', sub: 'Shuvo Battery Solution', icon: Store },
+  ];
+
   return (
-    <header className="sticky top-0 z-40 bg-white border-b border-slate-200/90 shadow-sm">
+    <header className="sticky top-0 z-40 bg-[#0B2547] lg:bg-white border-b border-[#0B2547] lg:border-slate-200/90 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        {/* Mobile Bar */}
+        <div className="flex lg:hidden items-center justify-between h-14 -mx-1">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-1 text-white"
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+            <Link href="/" className="flex items-center gap-2 min-w-0">
+              <Image
+                src="/logo.png" unoptimized
+                alt="Paikari Bazar"
+                width={35}
+                height={35}
+                priority
+                className="h-7 w-auto flex-shrink-0"
+              />
+              <div className="flex flex-col min-w-0">
+                <span className="font-extrabold text-white text-lg leading-none">Paikari Bazar</span>
+                <span className="font-bengali text-[9px] text-slate-300 leading-tight mt-0.5 truncate">
+                  বাংলাদেশের সবচেয়ে বড় পাইকারী ও স্ক্র্যাপ মার্কেটপ্লেস
+                </span>
+              </div>
+            </Link>
+          </div>
+          <button
+            onClick={() => setMobileMenuOpen(true)}
+            className="w-9 h-9 rounded-md bg-brand-orange flex items-center justify-center text-white flex-shrink-0 shadow"
+            aria-label="Search"
+          >
+            <Search className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* Desktop Bar */}
+        <div className="hidden lg:flex items-center justify-between h-16 md:h-20">
           
           {/* Logo Section */}
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-10 h-10 md:w-11 md:h-11 rounded-lg bg-gradient-to-br from-brand-navy to-brand-blue flex items-center justify-center text-white font-extrabold text-xl shadow-md group-hover:scale-105 transition-transform">
-              <span className="tracking-tighter">PB</span>
-            </div>
+            <Image
+              src="/logo.png" unoptimized
+              alt="Paikari Bazar"
+              width={48}
+              height={48}
+              priority
+              className="h-11 md:h-12 w-auto p-1.5 rounded-lg bg-[#041D3C] shadow-md group-hover:scale-105 transition-transform"
+            />
             <div className="flex flex-col">
               <span className="font-extrabold text-brand-navy text-lg md:text-xl tracking-tight leading-none group-hover:text-brand-blue transition-colors">
                 Paikari Bazar
@@ -159,60 +229,107 @@ export const Navbar: React.FC = () => {
       </div>
 
       {/* Mobile Drawer Menu */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-6 space-y-3 shadow-xl">
-          <div className="relative">
+      {/* Backdrop: soft blur, fades in/out */}
+      <div
+        onClick={() => setMobileMenuOpen(false)}
+        aria-hidden
+        className={`lg:hidden fixed inset-0 z-[60] bg-[#071B30]/55 backdrop-blur-[3px] transition-opacity duration-300 ease-out ${
+          mobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+      />
+
+      {/* Side drawer: slides in from the left (GPU transform only) */}
+      <aside
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menu"
+        aria-hidden={!mobileMenuOpen}
+        className={`lg:hidden fixed inset-y-0 left-0 z-[70] w-[84%] max-w-[330px] bg-white flex flex-col rounded-r-3xl shadow-[8px_0_40px_rgba(7,27,48,0.35)] will-change-transform transition-transform duration-[380ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          mobileMenuOpen ? 'translate-x-0' : '-translate-x-full pointer-events-none'
+        }`}
+      >
+        {/* Drawer header */}
+        <div className="flex items-center justify-between bg-[#0B2547] px-4 h-14 rounded-tr-3xl flex-shrink-0">
+          <div className="flex items-center gap-2.5">
+            <Image src="/logo.png" unoptimized alt="Paikari Bazar" width={32} height={36} className="h-9 w-auto" />
+            <span className="font-extrabold text-white text-lg leading-none">Paikari Bazar</span>
+          </div>
+          <button
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label="Close menu"
+            className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 active:scale-90 transition flex items-center justify-center text-white"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        <div className="flex-1 overflow-y-auto px-4 pt-4 pb-4">
+          {/* Search */}
+          <div
+            className={`relative transition-all duration-500 ease-out ${
+              mobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+            }`}
+            style={{ transitionDelay: mobileMenuOpen ? '120ms' : '0ms' }}
+          >
             <input
               type="text"
               placeholder="Search wholesale lots, scrap..."
-              className="w-full bg-slate-100 border border-slate-200 rounded-lg pl-9 pr-4 py-2 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-blue"
+              className="w-full bg-slate-100 border border-transparent rounded-xl pl-10 pr-4 py-3 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-brand-blue/40 focus:ring-4 focus:ring-brand-blue/10 transition"
             />
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
           </div>
 
-          <div className="space-y-1">
-            <Link
-              href="/"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-md font-semibold text-slate-800 hover:bg-slate-50"
-            >
-              Home
-            </Link>
-            <Link
-              href="/categories"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-md font-semibold text-slate-800 hover:bg-slate-50"
-            >
-              All Categories
-            </Link>
-            <Link
-              href="/buy-leads"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-md font-semibold text-slate-800 hover:bg-slate-50"
-            >
-              Buy Leads / RFQ
-            </Link>
-            <Link
-              href="/seller/seller-1"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-md font-semibold text-slate-800 hover:bg-slate-50"
-            >
-              Seller Hub (Shuvo Battery Solution)
-            </Link>
-          </div>
-
-          <div className="pt-2">
-            <Link
-              href="/post-ad"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full flex items-center justify-center gap-2 bg-brand-orange text-white py-2.5 rounded-lg font-bold text-sm shadow"
-            >
-              <PlusCircle className="w-4 h-4" />
-              <span>Post Scrap Ad</span>
-            </Link>
-          </div>
+          {/* Links */}
+          <nav className="mt-4 space-y-1.5">
+            {drawerLinks.map(({ href, label, sub, icon: Icon }, i) => {
+              const active = pathname === href;
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`group flex items-center gap-3 rounded-xl px-3 py-3 transition-all duration-500 ease-out active:scale-[0.98] ${
+                    active ? 'bg-orange-50' : 'hover:bg-slate-50'
+                  } ${mobileMenuOpen ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}`}
+                  style={{ transitionDelay: mobileMenuOpen ? `${180 + i * 60}ms` : '0ms' }}
+                >
+                  <span
+                    className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors ${
+                      active ? 'bg-brand-orange text-white' : 'bg-slate-100 text-brand-navy group-hover:bg-brand-navy group-hover:text-white'
+                    }`}
+                  >
+                    <Icon className="w-5 h-5" />
+                  </span>
+                  <span className="flex-1 min-w-0">
+                    <span className={`block text-[15px] font-semibold leading-tight ${active ? 'text-brand-orange' : 'text-slate-900'}`}>
+                      {label}
+                    </span>
+                    <span className="block text-[11px] text-slate-500 font-bengali truncate">{sub}</span>
+                  </span>
+                  <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-brand-orange group-hover:translate-x-0.5 transition" />
+                </Link>
+              );
+            })}
+          </nav>
         </div>
-      )}
+
+        {/* CTA */}
+        <div
+          className={`px-4 pb-5 pt-3 border-t border-slate-100 flex-shrink-0 transition-all duration-500 ease-out ${
+            mobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
+          }`}
+          style={{ transitionDelay: mobileMenuOpen ? '440ms' : '0ms' }}
+        >
+          <Link
+            href="/post-ad"
+            onClick={() => setMobileMenuOpen(false)}
+            className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-brand-orange to-orange-500 active:scale-[0.98] text-white py-3.5 rounded-xl font-bold text-sm shadow-lg shadow-orange-500/30 transition"
+          >
+            <PlusCircle className="w-4 h-4" />
+            <span>Post Scrap Ad</span>
+          </Link>
+        </div>
+      </aside>
     </header>
   );
 };

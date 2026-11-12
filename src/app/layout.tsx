@@ -26,10 +26,17 @@ export default function RootLayout({
     <html lang="bn" className="scroll-smooth">
       <body className="min-h-screen flex flex-col antialiased bg-slate-50 text-slate-900 selection:bg-brand-orange selection:text-white">
         {/* Live Scrap Price Ticker Bar */}
-        <PriceTicker rates={mockTickerRates} />
+        <div className="hidden lg:block">
+          <PriceTicker rates={mockTickerRates} />
+        </div>
 
         {/* Global Navigation Bar */}
         <Navbar />
+
+        {/* Mobile: ticker sits below the navbar */}
+        <div className="lg:hidden">
+          <PriceTicker rates={mockTickerRates} />
+        </div>
 
         {/* Page Content */}
         <main className="flex-1">

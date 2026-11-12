@@ -14,7 +14,7 @@ export const PriceTicker: React.FC<PriceTickerProps> = ({ rates }) => {
   const displayRates = [...activeRates, ...activeRates];
 
   return (
-    <div className="bg-[#071B30] text-slate-200 border-b border-white/10 text-xs py-1.5 overflow-hidden select-none">
+    <div className="bg-[#F3EEE6] text-slate-900 border-b border-[#E2D8C8] lg:bg-[#071B30] lg:text-slate-200 lg:border-white/10 text-xs py-2 lg:py-1.5 overflow-hidden select-none">
       <div className="max-w-7xl mx-auto px-4 flex items-center">
         {/* Ticker Lead Tag */}
         <div className="flex items-center gap-1.5 bg-brand-orange text-white text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-sm mr-3 flex-shrink-0 shadow-sm z-10">
@@ -28,8 +28,8 @@ export const PriceTicker: React.FC<PriceTickerProps> = ({ rates }) => {
           <div className="inline-flex animate-marquee hover:[animation-play-state:paused] gap-8 items-center">
             {displayRates.map((rate, idx) => (
               <div key={`${rate.id}-${idx}`} className="inline-flex items-center gap-2 font-mono text-xs">
-                <span className="font-semibold text-white tracking-wide">{rate.name}:</span>
-                <span className="text-amber-400 font-bold">
+                <span className="font-semibold text-slate-900 lg:text-white tracking-wide">{rate.name}:</span>
+                <span className="text-orange-600 lg:text-amber-400 font-bold">
                   {rate.price} {rate.unit}
                 </span>
                 {rate.trend === 'up' && (

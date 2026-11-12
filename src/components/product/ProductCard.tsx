@@ -5,7 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Product } from '@/types';
 import { formatBDT, getWhatsAppInquiryUrl } from '@/lib/utils';
-import { MessageCircle, MapPin, ShieldCheck } from 'lucide-react';
+import { MapPin, ShieldCheck } from 'lucide-react';
+import { WhatsAppIcon } from '@/components/ui/WhatsAppIcon';
 
 interface ProductCardProps {
   product: Product;
@@ -71,11 +72,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, compact = fal
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full flex items-center justify-center gap-1.5 bg-[#25D366]/15 hover:bg-[#25D366] text-[#128C7E] hover:text-white border border-[#25D366]/40 hover:border-transparent py-1.5 md:py-2 px-3 rounded-full font-medium text-xs md:text-sm transition-all duration-200 shadow-sm"
+          className="group w-full flex items-center justify-center gap-1.5 bg-[#25D366]/15 hover:bg-[#25D366] text-[#128C7E] hover:text-white border border-[#25D366]/40 hover:border-transparent py-1.5 md:py-2 px-3 rounded-full font-medium text-xs md:text-sm transition-all duration-200 shadow-sm"
         >
-          <div className="w-4 h-4 rounded-full bg-[#25D366] text-white flex items-center justify-center">
-            <MessageCircle className="w-2.5 h-2.5 fill-current" />
-          </div>
+          <WhatsAppIcon className="w-[18px] h-[18px] flex-shrink-0 text-[#25D366] group-hover:text-white transition-colors" />
           <span className="font-semibold lowercase tracking-wide">whatsapp</span>
         </a>
       </div>
