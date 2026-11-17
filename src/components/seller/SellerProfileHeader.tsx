@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { PhoneInput, emptyPhone } from '@/components/ui/PhoneInput';
 import { Seller } from '@/types';
 import { NidVerifiedApprovedBadge } from '@/components/ui/Badge';
 import { Star, ShieldCheck, MessageSquare, PhoneCall, UserPlus, Check, Share2, MapPin } from 'lucide-react';
@@ -16,6 +17,7 @@ export const SellerProfileHeader: React.FC<SellerProfileHeaderProps> = ({ seller
   const [isFollowing, setIsFollowing] = useState(false);
   const [activeModal, setActiveModal] = useState<'message' | 'callback' | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [phone, setPhone] = useState(emptyPhone());
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,21 +38,18 @@ export const SellerProfileHeader: React.FC<SellerProfileHeaderProps> = ({ seller
       </div>
 
       <div className="p-4 sm:p-6 lg:p-8 space-y-5">
-        {/* NID Verified Banner (Matches Image 1) */}
-        <div className="flex justify-start">
-          <NidVerifiedApprovedBadge />
-        </div>
+        {/* NID Verified Banner: only for verified sellers */}
+        {seller.isNidVerified && (
+          <div className="flex justify-start">
+            <NidVerifiedApprovedBadge />
+          </div>
+        )}
 
         {/* Seller Info Container */}
         <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
-          {/* Logo with battery icon styling */}
-          <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-slate-900 border-2 border-slate-200 flex flex-col items-center justify-center text-white overflow-hidden flex-shrink-0 shadow-md">
-            <div className="w-8 h-8 rounded bg-emerald-600 flex items-center justify-center font-bold text-xs mb-1">
-              শুভ
-            </div>
-            <span className="text-[10px] text-center font-bengali font-bold leading-tight px-1 text-slate-200">
-              ব্যাটারি সলিউশন
-            </span>
+          {/* Shop logo */}
+          <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-slate-100 border-2 border-slate-200 overflow-hidden flex-shrink-0 shadow-md">
+            <Image src={seller.logo} alt={seller.businessNameBn} fill sizes="96px" className="object-cover" />
           </div>
 
           {/* Details */}
@@ -62,7 +61,7 @@ export const SellerProfileHeader: React.FC<SellerProfileHeaderProps> = ({ seller
 
               {/* Stars (Matches Image 1: 2 stars) */}
               <div className="flex items-center text-amber-500">
-                {Array.from({ length: 2 }).map((_, i) => (
+                {Array.from({ length: Math.round(seller.rating) }).map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-current text-amber-400" />
                 ))}
               </div>
@@ -166,13 +165,8 @@ export const SellerProfileHeader: React.FC<SellerProfileHeaderProps> = ({ seller
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">মোবাইল নম্বর *</label>
-              <input
-                type="tel"
-                required
-                placeholder="017XXXXXXXX"
-                className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-blue focus:outline-none font-sans"
-              />
+              <label className="block text-xs font-semibold text-slate-700 mb-1">মোবাইল নম্বর (কান্ট্রি কোড সহ) *</label>
+              <PhoneInput value={phone} onChange={setPhone} required />
             </div>
             <Button type="submit" variant="primary" fullWidth className="font-bengali font-bold">
               সাবমিট করুন

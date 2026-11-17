@@ -28,12 +28,35 @@ export function toBengaliNumber(num: number | string): string {
 }
 
 /**
+ * Normalises a phone number to digits-only international format (no '+').
+ * - "+968 9900 0003" / "00968..." -> "96899000003"
+ * - "8801711223344"               -> unchanged
+ * - "01711223344" (no prefix)     -> assumed Bangladesh -> "8801711223344"
+ */
+export function normalizePhone(input: string): string {
+  const raw = input.trim();
+  const digits = raw.replace(/\D/g, '');
+  if (raw.startsWith('+')) return digits;
+  if (raw.startsWith('00')) return digits.slice(2);
+  if (digits.startsWith('880')) return digits;
+  return `880${digits.replace(/^0/, '')}`;
+}
+
+/** tel: link that works for any country. */
+export function getTelUrl(phoneNumber: string): string {
+  return `tel:+${normalizePhone(phoneNumber)}`;
+}
+
+/**
  * Generates direct WhatsApp chat URL with pre-filled inquiry text.
  */
 export function getWhatsAppInquiryUrl(phoneNumber: string, productTitle: string, location?: string): string {
-  const cleanPhone = phoneNumber.replace(/[^0-9]/g, '');
-  const formattedPhone = cleanPhone.startsWith('880') ? cleanPhone : `880${cleanPhone.replace(/^0/, '')}`;
   const message = `Hello, I saw your listing "${productTitle}" on Paikari Bazar${location ? ` (${location})` : ''}. I am interested in wholesale procurement. Please share more details.`;
-  return `https://wa.me/${formattedPhone}?text=${encodeURIComponent(message)}`;
+  return `https://wa.me/${normalizePhone(phoneNumber)}?text=${encodeURIComponent(message)}`;
 }
 
+/** WhatsApp link for a buyer's demand (seller contacting the buyer). */
+export function getWhatsAppLeadUrl(phoneNumber: string, leadTitle: string): string {
+  const message = `Hello, I saw your requirement "${leadTitle}" on Paikari Bazar. I can supply this. Please share details.`;
+  return `https://wa.me/${normalizePhone(phoneNumber)}?text=${encodeURIComponent(message)}`;
+}

@@ -1,4 +1,4 @@
-import { Category, Product, Seller, TickerRate } from '@/types';
+import { AppNotification, BuyLead, Category, Product, Seller, TickerRate } from '@/types';
 
 export const mockTickerRates: TickerRate[] = [
   {
@@ -227,6 +227,8 @@ export const mockProducts: Product[] = [
     description: 'Fresh stock of mixed tubular and dry cell IPS batteries. Uniform weight range, intact acid containers without leakage.',
     descriptionBn: 'সরাসরি কর্পোরেট অফিস ও ব্যাংক থেকে সংগৃহীত। প্রতিটি ব্যাটারি ড্রাই ও টিউবুলার গ্রেড, কোনো এসিড লিকেজ নেই। পাইকারি মূল্যে বিক্রয় হবে।',
     status: 'active',
+    condition: 'used',
+    country: 'BD',
     isFeatured: true,
     createdAt: '2026-11-08T09:30:00Z',
     tags: ['IPS Battery', 'Tubular Battery', 'Scrap Lot'],
@@ -260,6 +262,8 @@ export const mockProducts: Product[] = [
     description: 'High grade lead acid automotive scrap batteries. Suitable for direct smelters and secondary lead refiners.',
     descriptionBn: 'গাজীপুর গোডাউনে ১৫০ পিস রেডি স্টক। সব নামিদামি ব্র্যান্ডের গাড়ির ব্যাটারি, সীসার পরিমাণ ভালো।',
     status: 'active',
+    condition: 'used',
+    country: 'BD',
     isFeatured: true,
     createdAt: '2026-11-09T14:15:00Z',
     tags: ['Automotive Battery', 'Car Scrap', 'Gazipur'],
@@ -293,6 +297,8 @@ export const mockProducts: Product[] = [
     description: '99.97% pure refined lead ingots for battery manufacturing and chemical usage.',
     descriptionBn: '৯৯.৯৭% বিশুদ্ধ রিফাইন্ড সীসা ইনগট। ব্যাটারি প্রস্তুতকারক ও রাসায়নিক শিল্পের জন্য উপযুক্ত।',
     status: 'active',
+    condition: 'new',
+    country: 'BD',
     isFeatured: true,
     createdAt: '2026-11-07T11:00:00Z',
     tags: ['Pure Lead', 'Lead Ingot', 'Raw Metal'],
@@ -325,6 +331,8 @@ export const mockProducts: Product[] = [
     description: 'Heavy melting scrap from factory decommissioning. High density iron and structural beams.',
     descriptionBn: 'বন্ধ হয়ে যাওয়া টেক্সটাইল ও স্পিনিং মিলের স্ট্রাকচারাল হেভি আয়রন স্ক্র্যাপ। রি-রোলিং মিলের জন্য সেরা।',
     status: 'active',
+    condition: 'used',
+    country: 'BD',
     isFeatured: true,
     createdAt: '2026-11-06T16:40:00Z',
     tags: ['Iron Scrap', 'Heavy Duty', 'Factory Decommission'],
@@ -357,6 +365,8 @@ export const mockProducts: Product[] = [
     description: 'Server room backup batteries. Sealed lead acid 12V 7Ah to 12V 26Ah units.',
     descriptionBn: 'সার্ভার রুম থেকে নামানো সীলড লেড এসিড ব্যাটারি লট। দ্রুত ক্লিয়ারেন্স সেল।',
     status: 'active',
+    condition: 'used',
+    country: 'BD',
     isFeatured: false,
     createdAt: '2026-11-05T08:20:00Z',
     tags: ['UPS Battery', 'VRLA', 'Small Lot'],
@@ -385,6 +395,8 @@ export const mockProducts: Product[] = [
     description: 'Deep cycle solar batteries retrieved from rural electrification projects.',
     descriptionBn: 'পল্লী সোলার প্রজেক্ট থেকে সংগৃহীত ডিপ সাইকেল সোলার ব্যাটারির বিশাল কালেকশন।',
     status: 'active',
+    condition: 'used',
+    country: 'BD',
     isFeatured: false,
     createdAt: '2026-11-04T12:00:00Z',
     tags: ['Solar Battery', 'Deep Cycle', 'Solar Scrap'],
@@ -413,6 +425,8 @@ export const mockProducts: Product[] = [
     description: 'Bright bare copper wire millberry scrap. Zero oxidation, high electrical conductivity grade.',
     descriptionBn: 'মিলবেরি গ্রেড উজ্জ্বল তামার তারের স্ক্র্যাপ। সম্পূর্ণ খাঁটি কপার, কোনো ময়লা বা প্লাস্টিক আবরণ নেই।',
     status: 'active',
+    condition: 'used',
+    country: 'BD',
     isFeatured: true,
     createdAt: '2026-11-03T15:10:00Z',
     tags: ['Copper Wire', 'Millberry Scrap', 'Old Dhaka'],
@@ -441,9 +455,210 @@ export const mockProducts: Product[] = [
     description: 'Automatic heavy duty copper wire granulator and cable stripper machine in excellent running condition.',
     descriptionBn: 'কপার কেবল স্ট্রিপার ও গ্রানুলেটর মেশিন। সম্পূর্ণ রানিং কন্ডিশন, প্রতিদিন ৩ টন কেবল প্রসেসিং সক্ষমতা।',
     status: 'active',
+    condition: 'new',
+    country: 'BD',
     isFeatured: false,
     createdAt: '2026-11-02T10:00:00Z',
     tags: ['Stripper Machine', 'Recycling Equipment', 'Chittagong'],
   },
 ];
 
+
+export const mockBuyLeads: BuyLead[] = [
+  {
+    id: 'lead-1',
+    title: 'Urgent: 10 Ton car & IPS battery scrap needed',
+    titleBn: '১০ টন কার ব্যাটারি ও আইপিএস ব্যাটারি জরুরি প্রয়োজন',
+    buyerName: 'মেসার্স রহমান ব্যাটারি ইন্ডাস্ট্রিজ',
+    buyerPhone: '+8801711000001',
+    buyerWhatsapp: '+8801711000001',
+    country: 'BD',
+    location: 'Tongi, Gazipur',
+    locationBn: 'টঙ্গী, গাজীপুর, বাংলাদেশ',
+    quantity: '10 Metric Ton',
+    quantityBn: '১০ মেট্রিক টন',
+    budget: '১৪০-১৪৫ টাকা/কেজি',
+    status: 'approved',
+    createdAt: '2026-11-15T08:00:00Z',
+    timeAgoBn: '২ ঘণ্টা আগে',
+  },
+  {
+    id: 'lead-2',
+    title: 'Pure Lead Ingot 99.97% - 2 Ton required',
+    titleBn: 'প্লেট সীসা / বিশুদ্ধ সীসা ইনগট (৯৯.৯৭%) - ২ টন দরকার',
+    buyerName: 'আল-মদিনা মেটাল রিফাইনারি',
+    buyerPhone: '+8801711000002',
+    buyerWhatsapp: '+8801711000002',
+    country: 'BD',
+    location: 'Fatullah, Narayanganj',
+    locationBn: 'ফতুল্লা, নারায়ণগঞ্জ, বাংলাদেশ',
+    quantity: '2,000 KG',
+    quantityBn: '২,০০০ কেজি',
+    budget: '১৯০-১৯৫ টাকা/কেজি',
+    status: 'approved',
+    createdAt: '2026-11-15T05:00:00Z',
+    timeAgoBn: '৫ ঘণ্টা আগে',
+  },
+  {
+    id: 'lead-3',
+    title: 'Plate Lead wanted - 20 Ton monthly',
+    titleBn: 'Plate Lead (প্লেট সীসা) - মাসে ২০ টন দরকার',
+    buyerName: 'Gulf Lead Recycling LLC',
+    buyerPhone: '+96899000003',
+    buyerWhatsapp: '+96899000003',
+    country: 'OM',
+    location: 'Sohar, Oman',
+    locationBn: 'সোহার, ওমান',
+    quantity: '20 Ton / month',
+    quantityBn: 'মাসে ২০ টন',
+    budget: 'আলোচনা সাপেক্ষে',
+    status: 'approved',
+    createdAt: '2026-11-14T12:00:00Z',
+    timeAgoBn: '১ দিন আগে',
+  },
+  {
+    id: 'lead-4',
+    title: 'Heavy duty channel & beam scrap - 50 Ton+',
+    titleBn: 'জাহাজ ভাঙা হেভি ডিউটি চ্যানেল ও বিম ক্রয় করা হবে',
+    buyerName: 'ইস্পাত রোলিং মিলস লিমিটেড',
+    buyerPhone: '+8801711000004',
+    country: 'BD',
+    location: 'Sitakunda, Chittagong',
+    locationBn: 'সীতাকুণ্ড, চট্টগ্রাম, বাংলাদেশ',
+    quantity: '50 Ton+',
+    quantityBn: '৫০ টন+',
+    budget: 'আলোচনা সাপেক্ষে',
+    status: 'approved',
+    createdAt: '2026-11-14T08:00:00Z',
+    timeAgoBn: '১ দিন আগে',
+  },
+  {
+    id: 'lead-5',
+    title: 'Used batteries for smelting - 15 Ton',
+    titleBn: 'গলানোর জন্য পুরাতন ব্যাটারি - ১৫ টন',
+    buyerName: 'Lagos Metal Traders',
+    buyerPhone: '+2348030000005',
+    buyerWhatsapp: '+2348030000005',
+    country: 'NG',
+    location: 'Lagos, Nigeria',
+    locationBn: 'লাগোস, নাইজেরিয়া',
+    quantity: '15 Ton',
+    quantityBn: '১৫ টন',
+    status: 'approved',
+    createdAt: '2026-11-13T10:00:00Z',
+    timeAgoBn: '২ দিন আগে',
+  },
+];
+
+export const mockNotifications: AppNotification[] = [
+  {
+    id: 'n-1',
+    type: 'lead',
+    titleBn: 'নতুন ক্রেতার চাহিদা',
+    bodyBn: 'Plate Lead (প্লেট সীসা) - মাসে ২০ টন দরকার (ওমান)',
+    timeAgoBn: '১ ঘণ্টা আগে',
+    href: '/buy-leads',
+    read: false,
+  },
+  {
+    id: 'n-2',
+    type: 'offer',
+    titleBn: 'আপনার পণ্যে নতুন অফার এসেছে',
+    bodyBn: '৫ টন পুরাতন আইপিএস ব্যাটারি লট - ১৩২ টাকা/কেজি প্রস্তাব',
+    timeAgoBn: '৩ ঘণ্টা আগে',
+    href: '/products/prod-1',
+    read: false,
+  },
+  {
+    id: 'n-3',
+    type: 'system',
+    titleBn: 'Paikari Bazar এ স্বাগতম',
+    bodyBn: 'ফ্রি দোকান খুলে আপনার পণ্য আপলোড করুন',
+    timeAgoBn: '১ দিন আগে',
+    href: '/post-ad',
+    read: true,
+  },
+];
+
+/* ---------- Seller dashboard mock data (replace with API: GET /seller/stats, /seller/offers) ---------- */
+
+export interface ProductStats {
+  views: number;
+  whatsapp: number;
+  calls: number;
+  offers: number;
+}
+
+export const mockProductStats: Record<string, ProductStats> = {
+  'prod-1': { views: 1240, whatsapp: 86, calls: 41, offers: 12 },
+  'prod-2': { views: 860, whatsapp: 52, calls: 30, offers: 7 },
+  'prod-3': { views: 2310, whatsapp: 140, calls: 75, offers: 21 },
+  'prod-5': { views: 310, whatsapp: 12, calls: 6, offers: 1 },
+  'prod-6': { views: 540, whatsapp: 25, calls: 11, offers: 4 },
+  'prod-7': { views: 1680, whatsapp: 97, calls: 58, offers: 15 },
+};
+
+/** Views per day, oldest first (last 7 days) */
+export const mockDailyViews = [
+  { day: 'শনি', views: 620 },
+  { day: 'রবি', views: 810 },
+  { day: 'সোম', views: 740 },
+  { day: 'মঙ্গল', views: 990 },
+  { day: 'বুধ', views: 1120 },
+  { day: 'বৃহঃ', views: 870 },
+  { day: 'শুক্র', views: 1290 },
+];
+
+export interface Offer {
+  id: string;
+  productId: string;
+  productTitleBn: string;
+  buyerName: string;
+  buyerPhone: string;
+  country: string;
+  rate: string;
+  quantity: string;
+  message?: string;
+  timeAgoBn: string;
+  read: boolean;
+}
+
+export const mockOffers: Offer[] = [
+  {
+    id: 'off-1',
+    productId: 'prod-3',
+    productTitleBn: 'বিশুদ্ধ সীসা (Lead) - ৫০ কেজি Pure Lead',
+    buyerName: 'Gulf Lead Recycling LLC',
+    buyerPhone: '+96899000003',
+    country: 'OM',
+    rate: '১৮৮ টাকা/কেজি',
+    quantity: '৫ টন',
+    message: 'Monthly order possible if quality is good.',
+    timeAgoBn: '৪০ মিনিট আগে',
+    read: false,
+  },
+  {
+    id: 'off-2',
+    productId: 'prod-1',
+    productTitleBn: '৫ টন পুরাতন আইপিএস ব্যাটারি লট',
+    buyerName: 'মেসার্স রহমান ব্যাটারি',
+    buyerPhone: '+8801711000001',
+    country: 'BD',
+    rate: '১৩২ টাকা/কেজি',
+    quantity: '২ টন',
+    timeAgoBn: '৩ ঘণ্টা আগে',
+    read: false,
+  },
+  {
+    id: 'off-3',
+    productId: 'prod-7',
+    productTitleBn: 'তামার তার (বিশুদ্ধ কপার ওয়্যার)',
+    buyerName: 'Sharma Metals',
+    buyerPhone: '+919800000007',
+    country: 'IN',
+    rate: '৯১০ টাকা/কেজি',
+    quantity: '৫০০ কেজি',
+    timeAgoBn: '১ দিন আগে',
+    read: true,
+  },
+];

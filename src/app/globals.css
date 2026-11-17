@@ -44,3 +44,19 @@ body {
   scrollbar-width: none;
 }
 
+
+/* --- Google Translate: hide its banner/tooltips so the sticky header never shifts --- */
+body {
+  top: 0 !important;
+}
+.goog-te-banner-frame,
+.goog-te-balloon-frame,
+#goog-gt-tt,
+.goog-tooltip,
+iframe.skiptranslate {
+  display: none !important;
+}
+.goog-text-highlight {
+  background: none !important;
+  box-shadow: none !important;
+}

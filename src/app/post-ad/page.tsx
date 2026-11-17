@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { mockCategories } from '@/data/mockData';
+import { PhoneInput, emptyPhone } from '@/components/ui/PhoneInput';
 import { Button } from '@/components/ui/Button';
 import { PlusCircle, Upload, CheckCircle2, ShieldCheck, ArrowLeft } from 'lucide-react';
 
@@ -16,9 +17,11 @@ export default function PostAdPage() {
     moq: '',
     availableQty: '',
     location: 'Dhaka',
-    whatsapp: '',
     description: '',
+    condition: 'used' as 'new' | 'used',
+    youtube: '',
   });
+  const [whatsapp, setWhatsapp] = useState(emptyPhone());
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,10 +42,10 @@ export default function PostAdPage() {
           {/* Header */}
           <div className="pb-6 border-b border-slate-100 mb-6">
             <h1 className="text-2xl sm:text-3xl font-extrabold font-bengali text-brand-navy">
-              নতুন স্ক্র্যাপ বিজ্ঞাপন পোস্ট করুন
+              নতুন পণ্যের বিজ্ঞাপন পোস্ট করুন
             </h1>
             <p className="text-xs sm:text-sm text-slate-500 font-bengali mt-1">
-              আপনার কাছে থাকা পাইকারি স্ক্র্যাপের তথ্য দিন, ভেরিফিকেশনের পর সরাসরি মার্কেটপ্লেসে প্রদর্শিত হবে।
+              আপনার কাছে থাকা পাইকারি পণ্যের তথ্য দিন, ভেরিফিকেশনের পর সরাসরি মার্কেটপ্লেসে প্রদর্শিত হবে।
             </p>
           </div>
 
@@ -76,7 +79,7 @@ export default function PostAdPage() {
               {/* Category */}
               <div>
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                  স্ক্র্যাপ ক্যাটাগরি নির্বাচন করুন *
+                  ক্যাটাগরি নির্বাচন করুন *
                 </label>
                 <select
                   value={formData.category}
@@ -90,6 +93,29 @@ export default function PostAdPage() {
                     </option>
                   ))}
                 </select>
+              </div>
+
+              {/* Condition: new / used */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                  পণ্যের অবস্থা *
+                </label>
+                <div className="grid grid-cols-2 gap-3">
+                  {([['new', 'নতুন'], ['used', 'পুরাতন']] as const).map(([value, label]) => (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => setFormData({ ...formData, condition: value })}
+                      className={`py-2.5 rounded-xl border-2 text-sm font-bold transition-colors ${
+                        formData.condition === value
+                          ? 'border-brand-orange bg-orange-50 text-brand-orange'
+                          : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               {/* Title */}
@@ -190,16 +216,9 @@ export default function PostAdPage() {
               {/* WhatsApp Number */}
               <div>
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                  হোয়াটসঅ্যাপ নম্বর (ক্রেতারা যোগাযোগ করবেন) *
+                  হোয়াটসঅ্যাপ নম্বর — কান্ট্রি কোড সহ (ক্রেতারা যোগাযোগ করবেন) *
                 </label>
-                <input
-                  type="tel"
-                  required
-                  placeholder="017XXXXXXXX"
-                  value={formData.whatsapp}
-                  onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
-                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-brand-blue focus:outline-none font-sans"
-                />
+                <PhoneInput value={whatsapp} onChange={setWhatsapp} required />
               </div>
 
               {/* Description */}
@@ -209,7 +228,7 @@ export default function PostAdPage() {
                 </label>
                 <textarea
                   rows={4}
-                  placeholder="স্ক্র্যাপের কন্ডিশন, সীসার আনুমানিক শতাংশ, ডেলিভারির নিয়ম ইত্যাদি উল্লেখ করুন..."
+                  placeholder="পণ্যের কন্ডিশন, গুণমান, ডেলিভারির নিয়ম ইত্যাদি উল্লেখ করুন..."
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-brand-blue focus:outline-none"
@@ -219,13 +238,31 @@ export default function PostAdPage() {
               {/* Mock Image Upload Area */}
               <div>
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                  স্ক্র্যাপের ছবি আপলোড করুন (সর্বোচ্চ ৪টি)
+                  পণ্যের ছবি আপলোড করুন (সর্বোচ্চ ৪টি)
                 </label>
                 <div className="border-2 border-dashed border-slate-300 rounded-2xl p-6 text-center hover:border-brand-orange transition-colors cursor-pointer bg-slate-50/50">
                   <Upload className="w-8 h-8 text-slate-400 mx-auto mb-2" />
                   <p className="text-xs text-slate-600 font-medium">ছবি ড্র্যাগ করুন অথবা ক্লিক করে নির্বাচন করুন</p>
                   <p className="text-[11px] text-slate-400 mt-1">PNG, JPG বা WebP (সর্বোচ্চ ৫ মেগাবাইট)</p>
                 </div>
+              </div>
+
+              {/* YouTube video link (no video upload to save server cost) */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                  ইউটিউব ভিডিও লিংক (ঐচ্ছিক)
+                </label>
+                <input
+                  type="url"
+                  inputMode="url"
+                  placeholder="https://www.youtube.com/watch?v=..."
+                  value={formData.youtube}
+                  onChange={(e) => setFormData({ ...formData, youtube: e.target.value })}
+                  pattern="https?://(www\.)?(youtube\.com|youtu\.be)/.+"
+                  title="একটি ইউটিউব লিংক দিন"
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-base sm:text-sm focus:ring-2 focus:ring-brand-blue focus:outline-none font-sans"
+                />
+                <p className="text-[11px] text-slate-400 mt-1">ভিডিও আপলোড করতে হবে না — শুধু ইউটিউব লিংক পেস্ট করুন।</p>
               </div>
 
               {/* Submit Button */}

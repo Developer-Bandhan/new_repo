@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Shield, ArrowRight, Store, CheckCircle, Search, ClipboardList } from 'lucide-react';
+import { Shield, ArrowRight, Store, CheckCircle, Search, ClipboardList, PlusCircle } from 'lucide-react';
+import { openPostDemand } from '@/lib/postDemand';
 
 export const HeroSection: React.FC = () => {
   return (
@@ -23,35 +24,35 @@ export const HeroSection: React.FC = () => {
         </div>
 
         <h1 className="font-bengali font-bold text-[28px] leading-[1.3] [text-shadow:0_2px_10px_rgba(0,0,0,0.4)]">
-          বাংলাদেশের বৃহত্তম পাইকারি<br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-orange-400">ও স্ক্র্যাপ মার্কেটপ্লেস</span>
+          নতুন ও পুরাতন<br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-orange-400">পাইকারি বাজার</span>
         </h1>
         <p className="font-bengali text-[15px] text-slate-200 leading-relaxed mt-3">
-          ভেরিফাইড সেলার এবং ১০০% নিরাপদ লেনদেনের নিশ্চয়তা
+ভেরিফাইড সাপ্লায়ার ও সরাসরি লেনদেনের সুবিধা
         </p>
 
-        <div className="mt-5 flex flex-col gap-2.5 max-w-xs mx-auto">
-          <Link
-            href="/categories"
-            className="flex items-center justify-center gap-2 bg-brand-blue active:bg-brand-blueHover text-white py-3 rounded-xl text-sm font-bold uppercase shadow-lg"
+        <div className="mt-5 flex flex-col gap-2.5 max-w-sm mx-auto">
+          <button
+            onClick={openPostDemand}
+            className="flex items-center justify-center gap-2 bg-brand-blue active:bg-brand-blueHover text-white py-3.5 rounded-xl text-sm font-bold font-bengali shadow-lg"
           >
-            <span>Find Wholesale Lots</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+            <PlusCircle className="w-4 h-4" />
+            <span>আপনার কি মাল প্রয়োজন? চাহিদা পোস্ট করুন</span>
+          </button>
           <div className="grid grid-cols-2 gap-2.5">
             <Link
               href="/post-ad"
               className="flex items-center justify-center gap-1.5 bg-brand-orange active:bg-brand-orangeHover text-white py-3 rounded-xl text-xs font-bold uppercase shadow-lg"
             >
               <Store className="w-4 h-4" />
-              Open Free Shop
+              <span className="font-bengali">ফ্রি দোকান খুলুন</span>
             </Link>
             <Link
               href="/buy-leads"
               className="flex items-center justify-center gap-1.5 border border-white/60 text-white py-3 rounded-xl text-xs font-bengali font-semibold active:bg-white/10"
             >
               <ClipboardList className="w-4 h-4" />
-              Buy Leads
+              ক্রেতার চাহিদা
             </Link>
           </div>
         </div>
@@ -93,15 +94,15 @@ export const HeroSection: React.FC = () => {
 
             {/* Headline */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold font-bengali tracking-tight leading-[1.2] text-white">
-              বাংলাদেশের প্রথম ও বৃহত্তম <br />
+              নতুন ও পুরাতন <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-300">
-                বিটুবি স্ক্র্যাপ মার্কেটপ্লেস
+                পাইকারি বাজার
               </span>
             </h1>
 
             {/* Subtitle */}
             <p className="text-base sm:text-lg md:text-xl text-slate-300 font-bengali max-w-2xl mx-auto lg:mx-0 font-normal">
-              ভেরিফাইড সেলার এবং ১০০% নিরাপদ লেনদেনের নিশ্চয়তা
+ভেরিফাইড সাপ্লায়ার ও সরাসরি লেনদেনের সুবিধা
             </p>
 
             {/* Search Input Bar for Quick Procurement */}
@@ -124,11 +125,19 @@ export const HeroSection: React.FC = () => {
 
             {/* CTA Buttons (Matches Image 2) */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+              <button
+                onClick={openPostDemand}
+                className="inline-flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orangeHover text-white px-7 py-3.5 rounded-xl font-extrabold font-bengali text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5"
+              >
+                <PlusCircle className="w-4 h-4" />
+                <span>আপনার কি মাল প্রয়োজন? চাহিদা পোস্ট করুন</span>
+              </button>
+
               <Link
                 href="/categories"
                 className="inline-flex items-center justify-center gap-2 bg-brand-blue hover:bg-brand-blueHover text-white px-7 py-3.5 rounded-xl font-extrabold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5"
               >
-                <span>FIND WHOLESALE LOTS</span>
+                <span className="font-bengali">পাইকারি মাল খুঁজুন</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
 
@@ -137,7 +146,7 @@ export const HeroSection: React.FC = () => {
                 className="inline-flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orangeHover text-white px-7 py-3.5 rounded-xl font-extrabold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5"
               >
                 <Store className="w-4 h-4" />
-                <span>OPEN FREE SHOP</span>
+                <span className="font-bengali">ফ্রি দোকান খুলুন</span>
               </Link>
             </div>
 

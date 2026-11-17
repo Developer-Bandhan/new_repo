@@ -1,6 +1,7 @@
 import React from 'react';
 import { HeroSection } from '@/components/home/HeroSection';
 import { CategoryGrid } from '@/components/home/CategoryGrid';
+import { LiveBuyerDemand } from '@/components/home/LiveBuyerDemand';
 import { VerifiedSuppliers } from '@/components/home/VerifiedSuppliers';
 import { FeaturedInventory } from '@/components/home/FeaturedInventory';
 import { ShieldCheck, Truck, Headphones, BadgePercent, Store } from 'lucide-react';
@@ -21,6 +22,9 @@ export default function HomePage() {
 
       {/* 2. Category Section (Image 2) */}
       <CategoryGrid />
+
+      {/* 2b. Live buyer demand */}
+      <LiveBuyerDemand />
 
       {/* 3. Verified Supplier Section (Image 2) */}
       <VerifiedSuppliers />
@@ -85,7 +89,7 @@ export default function HomePage() {
             className="inline-flex items-center gap-2 bg-white text-brand-orange hover:bg-slate-100 font-bold px-8 py-3.5 rounded-xl shadow-lg transition-transform hover:scale-105 active:scale-95 text-sm md:text-base"
           >
             <Store className="w-4 h-4" />
-            <span className="uppercase">Open Free Shop</span>
+            <span className="font-bengali">ফ্রি দোকান খুলুন</span>
           </Link>
         </div>
       </section>

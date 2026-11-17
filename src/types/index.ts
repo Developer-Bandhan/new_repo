@@ -86,6 +86,9 @@ export interface Product {
   description: string;
   descriptionBn: string;
   status: 'pending' | 'active' | 'rejected' | 'sold';
+  condition: 'new' | 'used';
+  /** ISO country code of the goods location, e.g. 'BD' */
+  country: string;
   isFeatured: boolean;
   createdAt: string;
   tags?: string[];
@@ -97,12 +100,30 @@ export interface BuyLead {
   title: string;
   titleBn: string;
   buyerName: string;
+  /** International format, e.g. +8801712345678 */
   buyerPhone: string;
+  buyerWhatsapp?: string;
+  /** ISO country code, e.g. 'BD' */
+  country: string;
   location: string;
+  locationBn: string;
   quantity: string;
+  quantityBn: string;
   budget?: string;
   status: 'pending' | 'approved' | 'closed';
   createdAt: string;
+  /** Pre-formatted relative time (static for mock data) */
+  timeAgoBn: string;
+}
+
+export interface AppNotification {
+  id: string;
+  type: 'lead' | 'offer' | 'system';
+  titleBn: string;
+  bodyBn: string;
+  timeAgoBn: string;
+  href: string;
+  read: boolean;
 }
 
 export interface Inquiry {

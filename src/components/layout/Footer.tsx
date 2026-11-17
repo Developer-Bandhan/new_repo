@@ -13,13 +13,13 @@ export const Footer: React.FC = () => {
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-2.5">
               <Image src="/logo.png" unoptimized alt="Paikari Bazar" width={44} height={44} className="h-12 w-auto" />
-              <span className="font-extrabold text-white text-xl tracking-tight">
+              <span translate="no" className="font-extrabold text-white text-xl tracking-tight">
                 Paikari Bazar
               </span>
             </div>
             
             <p className="text-sm text-slate-300 font-bengali leading-relaxed max-w-sm">
-              বাংলাদেশের বৃহত্তম ও বিশ্বস্ত বিটুবি স্ক্র্যাপ মার্কেটপ্লেস। ভেরিফাইড সেলার এবং ১০০% নিরাপদ লেনদেনের নিশ্চয়তায় পাইকারি কেনাবেচা করুন।
+              নতুন ও পুরাতন পাইকারি বাজার। ভেরিফাইড সাপ্লায়ার ও সরাসরি লেনদেনের সুবিধায় বাংলাদেশসহ বিশ্বের যেকোনো দেশ থেকে পাইকারি কেনাবেচা করুন।
             </p>
 
             <div className="flex items-center gap-3 pt-2">
@@ -49,11 +49,11 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Scrap Categories */}
+          {/* Product Categories */}
           <div className="space-y-3">
-            <h4 className="text-white font-bold text-sm uppercase tracking-wider">Scrap Sectors</h4>
+            <h4 className="text-white font-bold text-sm uppercase tracking-wider">Product Sectors</h4>
             <ul className="space-y-2 text-xs md:text-sm font-bengali">
-              <li><Link href="/categories?slug=scrap-batteries" className="hover:text-white transition-colors">Scrap Batteries (পুরাতন ব্যাটারি)</Link></li>
+              <li><Link href="/categories?slug=scrap-batteries" className="hover:text-white transition-colors">পুরাতন ব্যাটারি (Used Batteries)</Link></li>
               <li><Link href="/categories?slug=lead-ingots" className="hover:text-white transition-colors">Lead Broken (সীসা ইনগট)</Link></li>
               <li><Link href="/categories?slug=solar-electronics" className="hover:text-white transition-colors">Solar & Electronics</Link></li>
               <li><Link href="/categories?slug=machinery" className="hover:text-white transition-colors">Heavy Machinery</Link></li>
@@ -66,8 +66,8 @@ export const Footer: React.FC = () => {
             <ul className="space-y-2 text-xs md:text-sm">
               <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
               <li><Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>
-              <li><Link href="/post-ad" className="hover:text-white transition-colors">Post Scrap Listing</Link></li>
-              <li><Link href="/buy-leads" className="hover:text-white transition-colors">Verified Buy Leads</Link></li>
+              <li><Link href="/post-ad" className="hover:text-white transition-colors">বিজ্ঞাপন দিন (Post Ad)</Link></li>
+              <li><Link href="/buy-leads" className="hover:text-white transition-colors">ক্রেতার চাহিদা (Buy Leads)</Link></li>
             </ul>
             <div className="pt-2">
               <span className="inline-flex items-center gap-1.5 text-xs text-emerald-400 bg-emerald-950/60 border border-emerald-700/50 px-2.5 py-1 rounded">
@@ -81,7 +81,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Bar */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
-          <p>© 2026 ® Trusted Trading Platform # | Paikari Bazar Bangladesh</p>
+          <p>© 2026 Paikari Bazar Bangladesh.</p>
         </div>
       </div>
     </footer>

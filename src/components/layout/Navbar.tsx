@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { 
   ChevronDown, 
   ShoppingBag, 
@@ -13,15 +13,20 @@ import {
   X, 
   Search,
   Home,
-  FileEdit,
   ClipboardList,
   LayoutGrid,
   ChevronRight
 } from 'lucide-react';
 import { mockCategories } from '@/data/mockData';
+import { openPostDemand } from '@/lib/postDemand';
+import { LanguageSwitcher } from './LanguageSwitcher';
+import { NotificationBell } from './NotificationBell';
+import { AccountButton, DrawerAccount } from './AccountButton';
 
 export const Navbar: React.FC = () => {
   const pathname = usePathname();
+  const router = useRouter();
+  const [searchText, setSearchText] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [categoriesOpen, setCategoriesOpen] = useState(false);
 
@@ -44,21 +49,28 @@ export const Navbar: React.FC = () => {
   }, [mobileMenuOpen]);
 
   const drawerLinks = [
-    { href: '/', label: 'Home', sub: 'হোম', icon: Home },
-    { href: '/categories', label: 'All Categories', sub: 'সব ক্যাটাগরি', icon: LayoutGrid },
-    { href: '/buy-leads', label: 'Buy Leads / RFQ', sub: 'ক্রেতার চাহিদা', icon: ClipboardList },
-    { href: '/seller/seller-1', label: 'Seller Hub', sub: 'Shuvo Battery Solution', icon: Store },
+    { href: '/', label: 'হোম', sub: 'Home', icon: Home },
+    { href: '/categories', label: 'সব ক্যাটাগরি', sub: 'All Categories', icon: LayoutGrid },
+    { href: '/buy-leads', label: 'ক্রেতার চাহিদা / অর্ডার পোস্ট', sub: 'Buy Leads / RFQ', icon: ClipboardList },
+    { href: '/seller/seller-1', label: 'সেলার হাব', sub: 'Seller Hub', icon: Store },
   ];
+
+  const submitSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const q = searchText.trim();
+    setMobileMenuOpen(false);
+    router.push(q ? `/categories?q=${encodeURIComponent(q)}` : '/categories');
+  };
 
   return (
     <header className="sticky top-0 z-40 bg-[#0B2547] lg:bg-white border-b border-[#0B2547] lg:border-slate-200/90 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Mobile Bar */}
-        <div className="flex lg:hidden items-center justify-between h-14 -mx-1">
-          <div className="flex items-center gap-2.5 min-w-0">
+        <div className="flex lg:hidden items-center justify-between h-14 gap-2">
+          <div className="flex items-center gap-2 min-w-0">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-1 text-white"
+              className="p-1 -ml-1 text-white"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -72,21 +84,20 @@ export const Navbar: React.FC = () => {
                 priority
                 className="h-7 w-auto flex-shrink-0"
               />
-              <div className="flex flex-col min-w-0">
-                <span className="font-extrabold text-white text-lg leading-none">Paikari Bazar</span>
-                <span className="font-bengali text-[9px] text-slate-300 leading-tight mt-0.5 truncate">
-                  বাংলাদেশের সবচেয়ে বড় পাইকারী ও স্ক্র্যাপ মার্কেটপ্লেস
-                </span>
-              </div>
+              <span translate="no" className="font-extrabold text-white text-lg leading-none truncate">Paikari Bazar</span>
             </Link>
           </div>
-          <button
-            onClick={() => setMobileMenuOpen(true)}
-            className="w-9 h-9 rounded-md bg-brand-orange flex items-center justify-center text-white flex-shrink-0 shadow"
-            aria-label="Search"
-          >
-            <Search className="w-4 h-4" />
-          </button>
+          <div className="flex items-center gap-1.5 flex-shrink-0">
+            <NotificationBell tone="dark" />
+            <LanguageSwitcher tone="dark" />
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
+              aria-label="Search"
+            >
+              <Search className="w-[18px] h-[18px]" />
+            </button>
+          </div>
         </div>
 
         {/* Desktop Bar */}
@@ -103,11 +114,11 @@ export const Navbar: React.FC = () => {
               className="h-11 md:h-12 w-auto p-1.5 rounded-lg bg-[#041D3C] shadow-md group-hover:scale-105 transition-transform"
             />
             <div className="flex flex-col">
-              <span className="font-extrabold text-brand-navy text-lg md:text-xl tracking-tight leading-none group-hover:text-brand-blue transition-colors">
+              <span translate="no" className="font-extrabold text-brand-navy text-lg md:text-xl tracking-tight leading-none group-hover:text-brand-blue transition-colors">
                 Paikari Bazar
               </span>
               <span className="font-bengali text-[11px] md:text-xs text-slate-500 font-medium leading-tight mt-0.5">
-                বাংলাদেশের সবচেয়ে বড় পাইকারী ও স্ক্র্যাপ মার্কেটপ্লেস
+                নতুন ও পুরাতন পাইকারি বাজার
               </span>
             </div>
           </Link>
@@ -120,7 +131,7 @@ export const Navbar: React.FC = () => {
                 pathname === '/' ? 'text-brand-orange' : 'text-slate-700 hover:text-brand-navy'
               }`}
             >
-              Home
+              হোম
             </Link>
 
             {/* Categories Dropdown */}
@@ -133,7 +144,7 @@ export const Navbar: React.FC = () => {
                 className="flex items-center gap-1 text-sm font-semibold text-slate-700 hover:text-brand-navy transition-colors py-2"
                 onClick={() => setCategoriesOpen(!categoriesOpen)}
               >
-                <span>Categories</span>
+                <span className="font-bengali">ক্যাটাগরি</span>
                 <ChevronDown className="w-4 h-4 text-slate-400" />
               </button>
 
@@ -154,7 +165,7 @@ export const Navbar: React.FC = () => {
                       href="/categories" 
                       className="block px-4 py-2 text-xs font-semibold text-brand-orange hover:underline"
                     >
-                      View All Categories →
+                      সব ক্যাটাগরি দেখুন →
                     </Link>
                   </div>
                 </div>
@@ -168,7 +179,7 @@ export const Navbar: React.FC = () => {
               }`}
             >
               <ShoppingBag className="w-4 h-4 text-brand-blue" />
-              <span>Buy Leads</span>
+              <span className="font-bengali">ক্রেতার চাহিদা</span>
             </Link>
 
             <Link
@@ -176,54 +187,36 @@ export const Navbar: React.FC = () => {
               className="flex items-center gap-1.5 text-sm font-semibold text-slate-700 hover:text-brand-navy transition-colors"
             >
               <Store className="w-4 h-4 text-emerald-600" />
-              <span>Seller Hub</span>
+              <span className="font-bengali">সেলার হাব</span>
             </Link>
           </nav>
 
-          {/* Desktop Right CTA */}
-          <div className="hidden lg:flex items-center gap-3">
+          {/* Desktop Right: search, bell, language, CTAs */}
+          <div className="hidden lg:flex items-center gap-2.5">
+            <Link
+              href="/categories"
+              aria-label="Search"
+              className="w-9 h-9 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors"
+            >
+              <Search className="w-[18px] h-[18px]" />
+            </Link>
+            <NotificationBell />
+            <LanguageSwitcher showLabel />
+            <AccountButton />
+            <button
+              onClick={openPostDemand}
+              className="inline-flex items-center gap-2 border-2 border-brand-orange text-brand-orange hover:bg-orange-50 px-4 py-2 rounded-lg font-bold text-sm font-bengali transition-colors"
+            >
+              <ClipboardList className="w-4 h-4" />
+              <span>চাহিদা পোস্ট</span>
+            </button>
             <Link
               href="/post-ad"
-              className="inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orangeHover text-white px-5 py-2.5 rounded-lg font-bold text-sm shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0"
+              className="inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orangeHover text-white px-4 py-2.5 rounded-lg font-bold text-sm font-bengali shadow-md hover:shadow-lg transition-all duration-200"
             >
               <PlusCircle className="w-4 h-4" />
-              <span>Post Ad</span>
+              <span>বিজ্ঞাপন দিন</span>
             </Link>
-          </div>
-
-          {/* Mobile Right Quick Action Icons (Matches Image 1: Home, Post Ad, Orders) */}
-          <div className="flex lg:hidden items-center gap-3 sm:gap-4">
-            <Link 
-              href="/" 
-              className="flex flex-col items-center text-slate-600 hover:text-brand-navy transition-colors"
-            >
-              <Home className="w-5 h-5 text-brand-blue" />
-              <span className="text-[10px] font-medium mt-0.5">Home</span>
-            </Link>
-
-            <Link 
-              href="/post-ad" 
-              className="flex flex-col items-center text-slate-600 hover:text-brand-navy transition-colors"
-            >
-              <FileEdit className="w-5 h-5 text-brand-orange" />
-              <span className="text-[10px] font-medium mt-0.5">Post Ad</span>
-            </Link>
-
-            <Link 
-              href="/buy-leads" 
-              className="flex flex-col items-center text-slate-600 hover:text-brand-navy transition-colors"
-            >
-              <ClipboardList className="w-5 h-5 text-slate-600" />
-              <span className="text-[10px] font-medium mt-0.5">Orders</span>
-            </Link>
-
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-1.5 text-slate-600 hover:text-slate-900 focus:outline-none"
-              aria-label="Toggle menu"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
           </div>
         </div>
       </div>
@@ -252,7 +245,7 @@ export const Navbar: React.FC = () => {
         <div className="flex items-center justify-between bg-[#0B2547] px-4 h-14 rounded-tr-3xl flex-shrink-0">
           <div className="flex items-center gap-2.5">
             <Image src="/logo.png" unoptimized alt="Paikari Bazar" width={32} height={36} className="h-9 w-auto" />
-            <span className="font-extrabold text-white text-lg leading-none">Paikari Bazar</span>
+            <span translate="no" className="font-extrabold text-white text-lg leading-none">Paikari Bazar</span>
           </div>
           <button
             onClick={() => setMobileMenuOpen(false)}
@@ -265,18 +258,26 @@ export const Navbar: React.FC = () => {
 
         <div className="flex-1 overflow-y-auto px-4 pt-4 pb-4">
           {/* Search */}
-          <div
+          <form
+            onSubmit={submitSearch}
             className={`relative transition-all duration-500 ease-out ${
               mobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
             }`}
             style={{ transitionDelay: mobileMenuOpen ? '120ms' : '0ms' }}
           >
             <input
-              type="text"
-              placeholder="Search wholesale lots, scrap..."
-              className="w-full bg-slate-100 border border-transparent rounded-xl pl-10 pr-4 py-3 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-brand-blue/40 focus:ring-4 focus:ring-brand-blue/10 transition"
+              type="search"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              placeholder="পণ্য, ব্যাটারি, মেশিনারি খুঁজুন..."
+              className="w-full bg-slate-100 border border-transparent rounded-xl pl-10 pr-4 py-3 text-base font-bengali text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-brand-blue/40 focus:ring-4 focus:ring-brand-blue/10 transition"
             />
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+          </form>
+
+          {/* Account */}
+          <div className="mt-4">
+            <DrawerAccount onNavigate={() => setMobileMenuOpen(false)} />
           </div>
 
           {/* Links */}
@@ -320,13 +321,23 @@ export const Navbar: React.FC = () => {
           }`}
           style={{ transitionDelay: mobileMenuOpen ? '440ms' : '0ms' }}
         >
+          <button
+            onClick={() => {
+              setMobileMenuOpen(false);
+              openPostDemand();
+            }}
+            className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-brand-orange to-orange-500 active:scale-[0.98] text-white py-3.5 rounded-xl font-bold text-sm font-bengali shadow-lg shadow-orange-500/30 transition"
+          >
+            <ClipboardList className="w-4 h-4" />
+            <span>আপনার চাহিদা পোস্ট করুন</span>
+          </button>
           <Link
             href="/post-ad"
             onClick={() => setMobileMenuOpen(false)}
-            className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-brand-orange to-orange-500 active:scale-[0.98] text-white py-3.5 rounded-xl font-bold text-sm shadow-lg shadow-orange-500/30 transition"
+            className="mt-2 w-full flex items-center justify-center gap-2 border border-slate-300 text-slate-700 active:scale-[0.98] py-3 rounded-xl font-bold text-sm font-bengali transition"
           >
             <PlusCircle className="w-4 h-4" />
-            <span>Post Scrap Ad</span>
+            <span>বিজ্ঞাপন দিন / ফ্রি দোকান খুলুন</span>
           </Link>
         </div>
       </aside>
