@@ -7,7 +7,6 @@ import Link from 'next/link';
 import { mockProducts, mockSellers } from '@/data/mockData';
 import { getWhatsAppInquiryUrl, getTelUrl } from '@/lib/utils';
 import { useWishlist, shareLink } from '@/lib/wishlist';
-import { OfferModal } from '@/components/product/OfferModal';
 import { PhoneInput, emptyPhone } from '@/components/ui/PhoneInput';
 import { Modal } from '@/components/ui/Modal';
 import { Button } from '@/components/ui/Button';
@@ -15,7 +14,6 @@ import { ProductCard } from '@/components/product/ProductCard';
 import { WhatsAppIcon } from '@/components/ui/WhatsAppIcon';
 import {
   PhoneCall,
-  HandCoins,
   MapPin,
   ShieldCheck,
   ChevronRight,
@@ -44,7 +42,6 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [isCallbackOpen, setIsCallbackOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isOfferOpen, setIsOfferOpen] = useState(false);
   const [callbackPhone, setCallbackPhone] = useState(emptyPhone());
   const [toast, setToast] = useState('');
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -211,19 +208,19 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
           {/* Info */}
           <div className="lg:col-span-5">
             {/* Price band */}
-            <div className="bg-gradient-to-r from-brand-navy to-brand-blue text-white px-4 py-3.5 lg:rounded-2xl flex items-end justify-between gap-3">
+            <div className="bg-white px-4 pt-4 pb-3 border-b border-slate-100 lg:px-0 lg:pt-0 flex items-end justify-between gap-3">
               <div>
-                <p className="text-[11px] font-bengali text-white/75">পাইকারি দাম</p>
-                <div className="flex items-baseline gap-1.5">
-                  <span className="text-[30px] leading-none font-extrabold tracking-tight">
+                <p className="text-[11px] font-bengali text-slate-500">পাইকারি দাম</p>
+                <div className="flex items-baseline gap-1 mt-0.5">
+                  <span className="text-[28px] leading-none font-extrabold tracking-tight text-brand-orange">
                     ৳{product.price.toLocaleString('en-US')}
                   </span>
-                  <span className="text-sm text-white/80 font-bengali">/ {unitLabel}</span>
+                  <span className="text-sm text-slate-500 font-bengali">/ {unitLabel}</span>
                 </div>
               </div>
-              <div className="text-right font-bengali">
-                <p className="text-[11px] text-white/75">ন্যূনতম অর্ডার</p>
-                <p className="text-sm font-bold">{product.minimumOrderQuantity}</p>
+              <div className="text-right font-bengali rounded-lg bg-orange-50 border border-orange-100 px-2.5 py-1.5">
+                <p className="text-[10px] text-slate-500">ন্যূনতম অর্ডার</p>
+                <p className="text-sm font-bold text-slate-900">{product.minimumOrderQuantity}</p>
               </div>
             </div>
 
@@ -272,35 +269,23 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
               </div>
 
               {/* Desktop actions */}
-              <div className="hidden lg:block mt-5 space-y-2">
-                <div className="grid grid-cols-2 gap-2">
-                  <a
-                    href={whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1fbd5b] text-white h-11 rounded-xl font-semibold text-sm"
-                  >
-                    <WhatsAppIcon className="w-[18px] h-[18px]" />
-                    <span className="font-bengali">হোয়াটসঅ্যাপ</span>
-                  </a>
-                  <a
-                    href={telUrl}
-                    className="flex items-center justify-center gap-2 bg-brand-navy text-white h-11 rounded-xl font-semibold text-sm"
-                  >
-                    <PhoneCall className="w-4 h-4" />
-                    <span className="font-bengali">কল করুন</span>
-                  </a>
-                </div>
-                <Button
-                  variant="primary"
-                  size="lg"
-                  fullWidth
-                  onClick={() => setIsOfferOpen(true)}
-                  leftIcon={<HandCoins className="w-[17px] h-[17px]" />}
-                  className="font-bengali font-bold !h-11 !rounded-xl !text-sm"
+              <div className="hidden lg:grid grid-cols-2 gap-2 mt-5">
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1fbd5b] text-white h-12 rounded-xl font-bold text-sm"
                 >
-                  আপনার রেট জানান
-                </Button>
+                  <WhatsAppIcon className="w-[18px] h-[18px]" />
+                  <span className="font-bengali">WhatsApp চ্যাট</span>
+                </a>
+                <a
+                  href={telUrl}
+                  className="flex items-center justify-center gap-2 bg-brand-navy text-white h-12 rounded-xl font-bold text-sm"
+                >
+                  <PhoneCall className="w-4 h-4" />
+                  <span className="font-bengali">কল করুন</span>
+                </a>
               </div>
 
               <button
@@ -382,14 +367,6 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
           </section>
         )}
 
-        <OfferModal
-          isOpen={isOfferOpen}
-          onClose={() => setIsOfferOpen(false)}
-          productTitle={product.titleBn}
-          listedPrice={`৳${product.price.toLocaleString('en-US')}`}
-          unitLabel={unitLabel}
-        />
-
         <Modal
           isOpen={isCallbackOpen}
           onClose={() => setIsCallbackOpen(false)}
@@ -432,7 +409,7 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
         </div>
       )}
 
-      {/* Mobile sticky bar (Daraz style): Store | WhatsApp | Call | Rate */}
+      {/* Mobile sticky bar (Daraz style): Store | Wishlist | WhatsApp chat | Call */}
       <div className="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white border-t border-slate-200 px-2 pt-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))]">
         <div className="flex items-center gap-1.5">
           <Link
@@ -442,29 +419,29 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
             <Store className="w-5 h-5" />
             দোকান
           </Link>
+          <button
+            onClick={handleWishlist}
+            className="w-14 flex flex-col items-center justify-center gap-0.5 text-[10px] text-slate-600 font-bengali"
+          >
+            <Heart className={`w-5 h-5 ${saved ? 'fill-red-500 text-red-500' : ''}`} />
+            পছন্দ
+          </button>
           <a
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-14 flex flex-col items-center justify-center gap-0.5 text-[10px] text-[#128C7E] font-bengali"
+            className="flex-1 h-12 rounded-lg bg-[#25D366] text-white text-sm font-bold font-bengali flex items-center justify-center gap-1.5 active:scale-95 transition"
           >
-            <WhatsAppIcon className="w-5 h-5" />
+            <WhatsAppIcon className="w-4 h-4" />
             চ্যাট
           </a>
           <a
             href={telUrl}
-            className="flex-1 h-12 rounded-lg bg-amber-500 text-white text-sm font-bold font-bengali flex items-center justify-center gap-1.5 active:scale-95 transition"
+            className="flex-1 h-12 rounded-lg bg-brand-orange text-white text-sm font-bold font-bengali flex items-center justify-center gap-1.5 active:scale-95 transition"
           >
             <PhoneCall className="w-4 h-4" />
             কল করুন
           </a>
-          <button
-            onClick={() => setIsOfferOpen(true)}
-            className="flex-1 h-12 rounded-lg bg-brand-orange text-white text-sm font-bold font-bengali flex items-center justify-center gap-1.5 active:scale-95 transition"
-          >
-            <HandCoins className="w-4 h-4" />
-            রেট জানান
-          </button>
         </div>
       </div>
     </div>
